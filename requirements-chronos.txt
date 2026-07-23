@@ -1,0 +1,5 @@
+# Optional dependency for Chronos baseline experiments
+#   pip install -r requirements-chronos.txt
+chronos-forecasting
+accelerate
+transformers

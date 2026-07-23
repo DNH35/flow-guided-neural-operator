@@ -1,0 +1,51 @@
+exp:
+  runner:
+    lr: 0.00001
+    optim: LAMB
+    train_batch_size: 256
+    valid_batch_size: 256
+    shuffle: false
+    multi_gpu: true
+    device: cuda
+    total_steps: 100000
+    num_workers: 24
+    log_step: 1000
+    checkpoint_step: 1000
+    grad_clip: 1.0
+    # start_from_ckpt: /home/duy/TrajectoryFlowMatching/BrainBERT/outputs/2025-05-18/23-30-17/base_checkpoint_last.pth
+    scheduler:
+      name: reduce_on_plateau
+      total_steps: 10000
+      warmup: 0.025
+data:
+  name: masked_tf_dataset
+  val_split: 0.05
+  data: data/pretrain_manifests
+  test_split: 0.05
+model:
+  name: masked_tf_model
+  hidden_dim: 384
+  layer_dim_feedforward: 1200
+  layer_activation: gelu
+  nhead: 12
+  encoder_num_layers: 3
+  input_dim: 40
+task:
+  name: spec_pretrain
+  mask_type: fixed
+  time_mask_consecutive_min: 1
+  time_mask_consecutive_max: 5
+  freq_mask_consecutive_min: 1
+  freq_mask_consecutive_max: 2
+  time_mask_p: 0.01
+  freq_mask_p: 0.01
+criterion:
+  name: pretrain_masked_criterion
+  alpha: 2
+preprocessor:
+  name: stft
+  freq_channel_cutoff: 40
+  nperseg: 400
+  noverlap: 350
+  normalizing: zscore
+  downsample_factor: 1

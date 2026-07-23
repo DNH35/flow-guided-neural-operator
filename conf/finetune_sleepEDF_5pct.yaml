@@ -1,0 +1,22 @@
+data:
+  path: data/sleepEDF
+  dataset_file: test_stft.pt
+  dim_check_file: train_stft.pt
+  batch_size: 64
+  train_split: 0.05
+  val_split: 0.10
+
+model:
+  upstream_ckpt: checkpoints/ffm_sleepEDF_pretrain.pt
+  num_classes: 5
+
+train:
+  epochs: 100
+  lr: 0.0003
+  weight_decay: 0.0
+  noisy_input: False
+  num_runs: 5
+
+results:
+  clean_save_path: outputs/sleepEDF_clean_5pct_results.csv
+  noisy_save_path: outputs/sleepEDF_noisy_5pct_results.csv

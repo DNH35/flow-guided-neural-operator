@@ -1,0 +1,13 @@
+data:
+  path: data/dreamt/processed_BVP_ACC_up_sample_datasets
+  train_path: finetune_skin_train_dataset_sub34.pt
+  val_path: finetune_skin_val_dataset_sub34.pt
+  test_path: finetune_skin_test_dataset_sub34.pt
+  batch_size: 32
+  low_data_mode: False
+
+model:
+  upstream_ckpt: checkpoints/mae_dreamt_BVP_ACC_upsample_epoch_250.pt
+
+results:
+  save_path: outputs/dreamt_skin_mae.csv

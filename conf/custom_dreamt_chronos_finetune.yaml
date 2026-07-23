@@ -1,0 +1,5 @@
+data: 
+  path: data/dreamt/S069_whole_df.csv
+
+results:
+  save_path: outputs/chronos_decimate_downsample_factor_last_emb_ALL_results.csv

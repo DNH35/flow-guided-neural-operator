@@ -1,0 +1,21 @@
+data:
+  path: data/epilepsy
+  dataset_file: test_stft.pt
+  dim_check_file: train_stft.pt
+  batch_size: 128
+  train_split: 0.05
+  val_split: 0.80
+
+model:
+  upstream_ckpt: checkpoints/ffm_epilepsy_pretrain.pt
+
+train:
+  epochs: 100
+  lr: 0.0003
+  weight_decay: 0.0
+  noisy_input: False
+  num_runs: 5
+
+results:
+  clean_save_path: outputs/epilepsy_clean_input_acc_f1.csv
+  noisy_save_path: outputs/epilepsy_noisy_input_aggregated.csv

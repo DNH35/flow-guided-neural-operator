@@ -1,0 +1,54 @@
+# Chronos baseline on Brain Treebank speech vs non-speech.
+# Uses the same BBT speech split as FGNO fine-tuning, then probes Chronos embeddings
+# across temporal downsample factors.
+exp:
+  runner:
+    train_batch_size: 128
+    valid_batch_size: 128
+    shuffle: false
+    device: cuda
+    num_workers: 0
+  task:
+    name: finetune_task
+
+data:
+  name: speech_finetuning
+  high_gamma: False
+  samp_frequency: 2048
+  raw_brain_data_dir: data/braintreebank
+  subject: sub_4
+  electrodes:
+  - LT1bId3
+  brain_runs: ['trial002']
+  rereference: laplacian
+  normalization: False
+  despike: False
+  delta: -1.5
+  duration: 5.0
+  interval_duration: 1.0
+  words: []
+  cached_transcript_aligns: None
+  val_split: 0.05
+  test_split: 0.1
+  preprocessor:
+    name: stft
+    freq_channel_cutoff: 40
+    target_freq_bins: 40
+    nperseg: 400
+    noverlap: 350
+    normalizing: zscore
+    downsample_factor: 1
+  low_data_mode: False
+
+chronos:
+  model_id: amazon/chronos-t5-tiny
+  downsample_factors: [1, 4, 8, 12, 24, 36, 48]
+  batch_size: 64
+  num_workers: 0
+  epochs: 100
+  patience: 10
+  lr: 0.0001
+  weight_decay: 0.01
+
+results:
+  save_path: outputs/chronos_bbt_downsample_results.csv

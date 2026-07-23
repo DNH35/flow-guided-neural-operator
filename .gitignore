@@ -1,0 +1,27 @@
+# Data and large artifacts
+data/braintreebank/
+data/dreamt/
+data/epilepsy/
+data/sleepEDF/
+data/pretrain_manifests/
+checkpoints/
+outputs/
+wandb/
+None/
+*.pth
+*.pt
+!requirements.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.env
+.pytest_cache/
+.ipynb_checkpoints/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

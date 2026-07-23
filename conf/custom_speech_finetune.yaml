@@ -1,0 +1,70 @@
+exp:
+  runner:
+    lr: 0.0001
+    optim: AdamW
+    train_batch_size: 128
+    valid_batch_size: 128
+    shuffle: false
+    multi_gpu: false
+    device: cuda
+    total_steps: 500
+    num_workers: 0
+    log_step: 1000
+    checkpoint_step: -1
+    grad_clip: 1.0
+    scheduler:
+      name: ramp_up
+      total_steps: 1000
+      warmup: 0.025
+  task:
+    name: finetune_task
+  criterion:
+    name: finetune_criterion
+data:
+  name: speech_finetuning
+  high_gamma: False
+  samp_frequency: 2048 
+  raw_brain_data_dir: data/braintreebank
+  #raw_brain_data_dir: /storage/czw/LanguageEcog/semantics/all_day_data/
+  #subject: subject4
+  subject: sub_4
+  electrodes: 
+  - LT1bId3
+  brain_runs: ['trial002']
+  #brain_runs: ['trial000', 'trial001']
+  rereference: laplacian
+  normalization: False
+  despike: False
+  delta: -1.5
+  duration: 5.0
+  interval_duration: 1.0
+  words: []
+  cached_transcript_aligns: None
+  val_split: 0.05
+  test_split: 0.1
+  preprocessor: 
+    name: stft
+    freq_channel_cutoff: 40
+    target_freq_bins: 40 
+    nperseg: 400
+    noverlap: 350
+    normalizing: zscore
+    downsample_factor: 1
+  low_data_mode: False
+
+model:
+  name: finetune_model
+  hidden_dim: 768
+  layer_dim_feedforward: 3072
+  layer_activation: gelu
+  nhead: 12
+  encoder_num_layers: 3
+  input_dim: 25
+  upstream_ckpt: checkpoints/TransformerFFM_big_250_full_sub.pt
+  frozen_upstream: True
+  upstream_num_layers: 6
+  seq_len: 196
+  dropout: 0.2
+
+results:
+  save_path: outputs/speech_finetuning_result.csv
